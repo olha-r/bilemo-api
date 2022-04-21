@@ -21,7 +21,9 @@ use Symfony\Component\Serializer\Annotation\Groups;
  *              "normalization_context" = {"groups"={"read:collection"}}
  *          }
  *      },
- *     paginationItemsPerPage=10
+ *     attributes={
+ *     "pagination_items_per_page" = 5
+ *     }
  * )
  * @ORM\Entity(repositoryClass=ProductRepository::class)
  */

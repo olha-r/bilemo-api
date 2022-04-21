@@ -23,7 +23,10 @@ use Symfony\Component\Serializer\Annotation\Groups;
  *                  "groups"={"read:user"}
  *              }
  *          },
- *          "post"}
+ *          "post"},
+ *     attributes={
+ *     "pagination_items_per_page" = 10
+ *     }
  * )
  * @ORM\Entity(repositoryClass=UserRepository::class)
  */
