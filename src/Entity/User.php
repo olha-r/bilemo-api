@@ -5,7 +5,9 @@ namespace App\Entity;
 use ApiPlatform\Core\Annotation\ApiResource;
 use App\Repository\UserRepository;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Serializer\Annotation\Groups;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * @ApiResource(
@@ -30,6 +32,7 @@ use Symfony\Component\Serializer\Annotation\Groups;
  *          "pagination_items_per_page" = 10
  *     }
  * )
+ * @UniqueEntity("email", message="Un utilisateur ayant cette adresse email existe déjà")
  * @ORM\Entity(repositoryClass=UserRepository::class)
  */
 class User
@@ -44,18 +47,36 @@ class User
 
     /**
      * @ORM\Column(type="string", length=255)
+     * @Assert\NotBlank(message = "Le prénom d'utilisateur est obligatoire")
+     * @Assert\Length(
+     *      min = 3,
+     *      max = 20,
+     *      minMessage = "Le prénom dois contenir entre 3 et 20 caractères",
+     *      maxMessage = "Le prénom dois contenir entre 3 et 20 caractères"
+     * )
      * @Groups({"read:user_details", "users_subresource", "read:customer"})
      */
     private $firstName;
 
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
+     * @Assert\NotBlank(message = "Le nom d'utilisateur est obligatoire")
+     * @Assert\Length(
+     *      min = 3,
+     *      max = 100,
+     *      minMessage = "Le nom dois contenir entre 3 et 100 caractères",
+     *      maxMessage = "Le nom dois contenir entre 3 et 100 caractères"
+     * )
      * @Groups({"read:user_details", "users_subresource", "read:customer"})
      */
     private $lastName;
 
     /**
      * @ORM\Column(type="string", length=255)
+     * @Assert\NotBlank(message = "L'adresse email est obligatoire")
+     * @Assert\Email(
+     *     message = "Le format de l'adresse email doit être valid."
+     * )
      * @Groups({"read:user_details"})
      */
     private $email;
@@ -63,6 +84,7 @@ class User
     /**
      * @ORM\ManyToOne(targetEntity=Customer::class, inversedBy="users")
      * @ORM\JoinColumn(nullable=false)
+     * @Assert\NotBlank(message = "Le client est obligatoire")
      * @Groups({"read:user_details"})
      */
     private $customer;
