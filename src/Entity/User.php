@@ -18,14 +18,16 @@ use Symfony\Component\Serializer\Annotation\Groups;
  *          "delete"
  *      },
  *      collectionOperations={
- *          "get"={
- *              "normalization_context"={
- *                  "groups"={"read:user"}
- *              }
- *          },
  *          "post"},
+ *     subresourceOperations={
+ *          "api_customers_users_get_subresource"={
+ *                 "normalization_context"={
+ *                      "groups"={"users_subresource"}
+ *                  }
+ *          }
+ *     },
  *     attributes={
- *     "pagination_items_per_page" = 10
+ *          "pagination_items_per_page" = 10
  *     }
  * )
  * @ORM\Entity(repositoryClass=UserRepository::class)
@@ -36,19 +38,19 @@ class User
      * @ORM\Id
      * @ORM\GeneratedValue
      * @ORM\Column(type="integer")
-     * @Groups({"read:user_details", "read:user", "read:customer"})
+     * @Groups({"read:user_details", "users_subresource", "read:customer"})
      */
     private $id;
 
     /**
      * @ORM\Column(type="string", length=255)
-     * @Groups({"read:user_details", "read:user", "read:customer"})
+     * @Groups({"read:user_details", "users_subresource", "read:customer"})
      */
     private $firstName;
 
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
-     * @Groups({"read:user_details", "read:user", "read:customer"})
+     * @Groups({"read:user_details", "users_subresource", "read:customer"})
      */
     private $lastName;
 
