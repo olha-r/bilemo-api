@@ -2,14 +2,26 @@
 
 namespace App\Entity;
 
+use ApiPlatform\Core\Annotation\ApiResource;
 use App\Repository\CustomerRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
+use Symfony\Component\Serializer\Annotation\Groups;
 
 /**
+ * @ApiResource(
+ *      itemOperations={
+ *          "get"={
+ *              "normalization_context"={
+ *                  "groups"={"read:customer"}
+ *              }
+ *          }
+ *      },
+ *      collectionOperations={}
+ * )
  * @ORM\Entity(repositoryClass=CustomerRepository::class)
  */
 class Customer implements UserInterface, PasswordAuthenticatedUserInterface
@@ -18,6 +30,7 @@ class Customer implements UserInterface, PasswordAuthenticatedUserInterface
      * @ORM\Id
      * @ORM\GeneratedValue
      * @ORM\Column(type="integer")
+     * @Groups({"read:customer"})
      */
     private $id;
 
@@ -49,11 +62,13 @@ class Customer implements UserInterface, PasswordAuthenticatedUserInterface
 
     /**
      * @ORM\Column(type="string", length=255)
+     * @Groups({"read:customer", "read:user_details"})
      */
     private $companyName;
 
     /**
      * @ORM\OneToMany(targetEntity=User::class, mappedBy="customer", orphanRemoval=true)
+     * @Groups({"read:customer"})
      */
     private $users;
 
