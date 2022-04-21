@@ -5,9 +5,24 @@ namespace App\Entity;
 use ApiPlatform\Core\Annotation\ApiResource;
 use App\Repository\ProductRepository;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Serializer\Annotation\Groups;
 
 /**
- * @ApiResource()
+ * @ApiResource(
+ * itemOperations={
+ *          "get"={
+ *              "normalization_context" = {
+ *                  "groups"={"read:collection", "read:items"}}
+ *           }
+ *      },
+ *
+ *     collectionOperations={
+ *          "get"={
+ *              "normalization_context" = {"groups"={"read:collection"}}
+ *          }
+ *      },
+ *     paginationItemsPerPage=10
+ * )
  * @ORM\Entity(repositoryClass=ProductRepository::class)
  */
 class Product
@@ -16,41 +31,49 @@ class Product
      * @ORM\Id
      * @ORM\GeneratedValue
      * @ORM\Column(type="integer")
+     * @Groups({"read:collection"})
      */
     private $id;
 
     /**
      * @ORM\Column(type="string", length=255)
+     * @Groups({"read:collection"})
      */
     private $brand;
 
     /**
      * @ORM\Column(type="string", length=255)
+     * @Groups({"read:collection"})
      */
     private $model;
 
     /**
      * @ORM\Column(type="text")
+     * @Groups({"read:items"})
      */
     private $description;
 
     /**
      * @ORM\Column(type="float")
+     * @Groups({"read:items"})
      */
     private $price;
 
     /**
      * @ORM\Column(type="string", length=255)
+     * @Groups({"read:items"})
      */
     private $color;
 
     /**
      * @ORM\Column(type="integer")
+     * @Groups({"read:collection"})
      */
     private $stock;
 
     /**
      * @ORM\Column(type="datetime")
+     * @Groups({"read:items"})
      */
     private $createdAt;
 
