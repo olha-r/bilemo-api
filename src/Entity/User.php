@@ -20,6 +20,11 @@ use Symfony\Component\Validator\Constraints as Assert;
  *          "delete"
  *      },
  *      collectionOperations={
+ *          "get"={
+ *              "normalization_context"={
+ *                  "groups"={"read:user"}
+ *              }
+ *          },
  *          "post"},
  *     subresourceOperations={
  *          "api_customers_users_get_subresource"={
@@ -41,7 +46,7 @@ class User
      * @ORM\Id
      * @ORM\GeneratedValue
      * @ORM\Column(type="integer")
-     * @Groups({"read:user_details", "users_subresource", "read:customer"})
+     * @Groups({"read:user_details", "read:user", "users_subresource",  "read:customer"})
      */
     private $id;
 
@@ -54,7 +59,7 @@ class User
      *      minMessage = "Le prénom dois contenir entre 3 et 20 caractères",
      *      maxMessage = "Le prénom dois contenir entre 3 et 20 caractères"
      * )
-     * @Groups({"read:user_details", "users_subresource", "read:customer"})
+     * @Groups({"read:user_details", "read:user", "users_subresource", "read:customer"})
      */
     private $firstName;
 
@@ -67,7 +72,7 @@ class User
      *      minMessage = "Le nom dois contenir entre 3 et 100 caractères",
      *      maxMessage = "Le nom dois contenir entre 3 et 100 caractères"
      * )
-     * @Groups({"read:user_details", "users_subresource", "read:customer"})
+     * @Groups({"read:user_details", "read:user",  "users_subresource", "read:customer"})
      */
     private $lastName;
 
