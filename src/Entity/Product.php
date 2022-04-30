@@ -23,6 +23,11 @@ use Symfony\Component\Serializer\Annotation\Groups;
  *      },
  *     attributes={
  *     "pagination_items_per_page" = 5
+ *     },
+ *     cacheHeaders={
+ *     "max_age" = 7200,
+ *     "shared_max_age" = 7200,
+ *     "vary" = {"Authorization", "Accept-Language"}
  *     }
  * )
  * @ORM\Entity(repositoryClass=ProductRepository::class)
