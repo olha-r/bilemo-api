@@ -26,13 +26,6 @@ use Symfony\Component\Validator\Constraints as Assert;
  *              }
  *          },
  *          "post"},
- *     subresourceOperations={
- *          "api_customers_users_get_subresource"={
- *                 "normalization_context"={
- *                      "groups"={"users_subresource"}
- *                  }
- *          }
- *     },
  *     attributes={
  *          "pagination_items_per_page" = 10
  *     }
@@ -46,7 +39,7 @@ class User
      * @ORM\Id
      * @ORM\GeneratedValue
      * @ORM\Column(type="integer")
-     * @Groups({"read:user_details", "read:user", "users_subresource",  "read:customer"})
+     * @Groups({"read:user_details", "read:user", "read:customer"})
      */
     private $id;
 
@@ -59,7 +52,7 @@ class User
      *      minMessage = "Le prénom dois contenir entre 3 et 20 caractères",
      *      maxMessage = "Le prénom dois contenir entre 3 et 20 caractères"
      * )
-     * @Groups({"read:user_details", "read:user", "users_subresource", "read:customer"})
+     * @Groups({"read:user_details", "read:user", "read:customer"})
      */
     private $firstName;
 
@@ -72,7 +65,7 @@ class User
      *      minMessage = "Le nom dois contenir entre 3 et 100 caractères",
      *      maxMessage = "Le nom dois contenir entre 3 et 100 caractères"
      * )
-     * @Groups({"read:user_details", "read:user",  "users_subresource", "read:customer"})
+     * @Groups({"read:user_details", "read:user",  "read:customer"})
      */
     private $lastName;
 
