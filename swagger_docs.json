@@ -1,0 +1,1263 @@
+{
+    "openapi": "3.0.3",
+    "info": {
+        "title": "",
+        "description": "",
+        "version": "0.0.0"
+    },
+    "servers": [
+        {
+            "url": "/",
+            "description": ""
+        }
+    ],
+    "paths": {
+        "/api/customers/{id}": {
+            "get": {
+                "operationId": "getCustomerItem",
+                "tags": [
+                    "Customer"
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Customer resource",
+                        "content": {
+                            "application/ld+json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Customer.jsonld-read.customer"
+                                }
+                            },
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Customer-read.customer"
+                                }
+                            },
+                            "text/html": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Customer-read.customer"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Resource not found"
+                    }
+                },
+                "summary": "Retrieves a Customer resource.",
+                "description": "Retrieves a Customer resource.",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "Resource identifier",
+                        "required": true,
+                        "deprecated": false,
+                        "allowEmptyValue": false,
+                        "schema": {
+                            "type": "string"
+                        },
+                        "style": "simple",
+                        "explode": false,
+                        "allowReserved": false
+                    }
+                ],
+                "deprecated": false
+            },
+            "parameters": []
+        },
+        "/api/products": {
+            "get": {
+                "operationId": "getProductCollection",
+                "tags": [
+                    "Product"
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Product collection",
+                        "content": {
+                            "application/ld+json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "hydra:member": {
+                                            "type": "array",
+                                            "items": {
+                                                "$ref": "#/components/schemas/Product.jsonld-read.collection"
+                                            }
+                                        },
+                                        "hydra:totalItems": {
+                                            "type": "integer",
+                                            "minimum": 0
+                                        },
+                                        "hydra:view": {
+                                            "type": "object",
+                                            "properties": {
+                                                "@id": {
+                                                    "type": "string",
+                                                    "format": "iri-reference"
+                                                },
+                                                "@type": {
+                                                    "type": "string"
+                                                },
+                                                "hydra:first": {
+                                                    "type": "string",
+                                                    "format": "iri-reference"
+                                                },
+                                                "hydra:last": {
+                                                    "type": "string",
+                                                    "format": "iri-reference"
+                                                },
+                                                "hydra:previous": {
+                                                    "type": "string",
+                                                    "format": "iri-reference"
+                                                },
+                                                "hydra:next": {
+                                                    "type": "string",
+                                                    "format": "iri-reference"
+                                                }
+                                            }
+                                        },
+                                        "hydra:search": {
+                                            "type": "object",
+                                            "properties": {
+                                                "@type": {
+                                                    "type": "string"
+                                                },
+                                                "hydra:template": {
+                                                    "type": "string"
+                                                },
+                                                "hydra:variableRepresentation": {
+                                                    "type": "string"
+                                                },
+                                                "hydra:mapping": {
+                                                    "type": "array",
+                                                    "items": {
+                                                        "type": "object",
+                                                        "properties": {
+                                                            "@type": {
+                                                                "type": "string"
+                                                            },
+                                                            "variable": {
+                                                                "type": "string"
+                                                            },
+                                                            "property": {
+                                                                "type": "string",
+                                                                "nullable": true
+                                                            },
+                                                            "required": {
+                                                                "type": "boolean"
+                                                            }
+                                                        }
+                                                    }
+                                                }
+                                            }
+                                        }
+                                    },
+                                    "required": [
+                                        "hydra:member"
+                                    ]
+                                }
+                            },
+                            "application/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "$ref": "#/components/schemas/Product-read.collection"
+                                    }
+                                }
+                            },
+                            "text/html": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "$ref": "#/components/schemas/Product-read.collection"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "summary": "Retrieves the collection of Product resources.",
+                "description": "Retrieves the collection of Product resources.",
+                "parameters": [
+                    {
+                        "name": "page",
+                        "in": "query",
+                        "description": "The collection page number",
+                        "required": false,
+                        "deprecated": false,
+                        "allowEmptyValue": true,
+                        "schema": {
+                            "type": "integer",
+                            "default": 1
+                        },
+                        "style": "form",
+                        "explode": false,
+                        "allowReserved": false
+                    },
+                    {
+                        "name": "itemsPerPage",
+                        "in": "query",
+                        "description": "The number of items per page",
+                        "required": false,
+                        "deprecated": false,
+                        "allowEmptyValue": true,
+                        "schema": {
+                            "type": "integer",
+                            "default": 5,
+                            "minimum": 0
+                        },
+                        "style": "form",
+                        "explode": false,
+                        "allowReserved": false
+                    },
+                    {
+                        "name": "pagination",
+                        "in": "query",
+                        "description": "Enable or disable pagination",
+                        "required": false,
+                        "deprecated": false,
+                        "allowEmptyValue": true,
+                        "schema": {
+                            "type": "boolean"
+                        },
+                        "style": "form",
+                        "explode": false,
+                        "allowReserved": false
+                    }
+                ],
+                "deprecated": false
+            },
+            "parameters": []
+        },
+        "/api/products/{id}": {
+            "get": {
+                "operationId": "getProductItem",
+                "tags": [
+                    "Product"
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Product resource",
+                        "content": {
+                            "application/ld+json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Product.jsonld-read.collection_read.items"
+                                }
+                            },
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Product-read.collection_read.items"
+                                }
+                            },
+                            "text/html": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Product-read.collection_read.items"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Resource not found"
+                    }
+                },
+                "summary": "Retrieves a Product resource.",
+                "description": "Retrieves a Product resource.",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "Resource identifier",
+                        "required": true,
+                        "deprecated": false,
+                        "allowEmptyValue": false,
+                        "schema": {
+                            "type": "string"
+                        },
+                        "style": "simple",
+                        "explode": false,
+                        "allowReserved": false
+                    }
+                ],
+                "deprecated": false
+            },
+            "parameters": []
+        },
+        "/api/users": {
+            "get": {
+                "operationId": "getUserCollection",
+                "tags": [
+                    "User"
+                ],
+                "responses": {
+                    "200": {
+                        "description": "User collection",
+                        "content": {
+                            "application/ld+json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "hydra:member": {
+                                            "type": "array",
+                                            "items": {
+                                                "$ref": "#/components/schemas/User.jsonld-read.user"
+                                            }
+                                        },
+                                        "hydra:totalItems": {
+                                            "type": "integer",
+                                            "minimum": 0
+                                        },
+                                        "hydra:view": {
+                                            "type": "object",
+                                            "properties": {
+                                                "@id": {
+                                                    "type": "string",
+                                                    "format": "iri-reference"
+                                                },
+                                                "@type": {
+                                                    "type": "string"
+                                                },
+                                                "hydra:first": {
+                                                    "type": "string",
+                                                    "format": "iri-reference"
+                                                },
+                                                "hydra:last": {
+                                                    "type": "string",
+                                                    "format": "iri-reference"
+                                                },
+                                                "hydra:previous": {
+                                                    "type": "string",
+                                                    "format": "iri-reference"
+                                                },
+                                                "hydra:next": {
+                                                    "type": "string",
+                                                    "format": "iri-reference"
+                                                }
+                                            }
+                                        },
+                                        "hydra:search": {
+                                            "type": "object",
+                                            "properties": {
+                                                "@type": {
+                                                    "type": "string"
+                                                },
+                                                "hydra:template": {
+                                                    "type": "string"
+                                                },
+                                                "hydra:variableRepresentation": {
+                                                    "type": "string"
+                                                },
+                                                "hydra:mapping": {
+                                                    "type": "array",
+                                                    "items": {
+                                                        "type": "object",
+                                                        "properties": {
+                                                            "@type": {
+                                                                "type": "string"
+                                                            },
+                                                            "variable": {
+                                                                "type": "string"
+                                                            },
+                                                            "property": {
+                                                                "type": "string",
+                                                                "nullable": true
+                                                            },
+                                                            "required": {
+                                                                "type": "boolean"
+                                                            }
+                                                        }
+                                                    }
+                                                }
+                                            }
+                                        }
+                                    },
+                                    "required": [
+                                        "hydra:member"
+                                    ]
+                                }
+                            },
+                            "application/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "$ref": "#/components/schemas/User-read.user"
+                                    }
+                                }
+                            },
+                            "text/html": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "$ref": "#/components/schemas/User-read.user"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "summary": "Retrieves the collection of User resources.",
+                "description": "Retrieves the collection of User resources.",
+                "parameters": [
+                    {
+                        "name": "page",
+                        "in": "query",
+                        "description": "The collection page number",
+                        "required": false,
+                        "deprecated": false,
+                        "allowEmptyValue": true,
+                        "schema": {
+                            "type": "integer",
+                            "default": 1
+                        },
+                        "style": "form",
+                        "explode": false,
+                        "allowReserved": false
+                    },
+                    {
+                        "name": "itemsPerPage",
+                        "in": "query",
+                        "description": "The number of items per page",
+                        "required": false,
+                        "deprecated": false,
+                        "allowEmptyValue": true,
+                        "schema": {
+                            "type": "integer",
+                            "default": 10,
+                            "minimum": 0
+                        },
+                        "style": "form",
+                        "explode": false,
+                        "allowReserved": false
+                    },
+                    {
+                        "name": "pagination",
+                        "in": "query",
+                        "description": "Enable or disable pagination",
+                        "required": false,
+                        "deprecated": false,
+                        "allowEmptyValue": true,
+                        "schema": {
+                            "type": "boolean"
+                        },
+                        "style": "form",
+                        "explode": false,
+                        "allowReserved": false
+                    }
+                ],
+                "deprecated": false
+            },
+            "post": {
+                "operationId": "postUserCollection",
+                "tags": [
+                    "User"
+                ],
+                "responses": {
+                    "201": {
+                        "description": "User resource created",
+                        "content": {
+                            "application/ld+json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/User.jsonld"
+                                }
+                            },
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/User"
+                                }
+                            },
+                            "text/html": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/User"
+                                }
+                            }
+                        },
+                        "links": {
+                            "GetUserItem": {
+                                "operationId": "getUserItem",
+                                "parameters": {
+                                    "id": "$response.body#/id"
+                                },
+                                "description": "The `id` value returned in the response can be used as the `id` parameter in `GET /api/users/{id}`."
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Invalid input"
+                    },
+                    "422": {
+                        "description": "Unprocessable entity"
+                    }
+                },
+                "summary": "Creates a User resource.",
+                "description": "Creates a User resource.",
+                "parameters": [],
+                "requestBody": {
+                    "description": "The new User resource",
+                    "content": {
+                        "application/ld+json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/User.jsonld"
+                            }
+                        },
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/User"
+                            }
+                        },
+                        "text/html": {
+                            "schema": {
+                                "$ref": "#/components/schemas/User"
+                            }
+                        }
+                    },
+                    "required": true
+                },
+                "deprecated": false
+            },
+            "parameters": []
+        },
+        "/api/users/{id}": {
+            "get": {
+                "operationId": "getUserItem",
+                "tags": [
+                    "User"
+                ],
+                "responses": {
+                    "200": {
+                        "description": "User resource",
+                        "content": {
+                            "application/ld+json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/User.jsonld-read.user_details"
+                                }
+                            },
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/User-read.user_details"
+                                }
+                            },
+                            "text/html": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/User-read.user_details"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Resource not found"
+                    }
+                },
+                "summary": "Retrieves a User resource.",
+                "description": "Retrieves a User resource.",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "Resource identifier",
+                        "required": true,
+                        "deprecated": false,
+                        "allowEmptyValue": false,
+                        "schema": {
+                            "type": "string"
+                        },
+                        "style": "simple",
+                        "explode": false,
+                        "allowReserved": false
+                    }
+                ],
+                "deprecated": false
+            },
+            "delete": {
+                "operationId": "deleteUserItem",
+                "tags": [
+                    "User"
+                ],
+                "responses": {
+                    "204": {
+                        "description": "User resource deleted"
+                    },
+                    "404": {
+                        "description": "Resource not found"
+                    }
+                },
+                "summary": "Removes the User resource.",
+                "description": "Removes the User resource.",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "Resource identifier",
+                        "required": true,
+                        "deprecated": false,
+                        "allowEmptyValue": false,
+                        "schema": {
+                            "type": "string"
+                        },
+                        "style": "simple",
+                        "explode": false,
+                        "allowReserved": false
+                    }
+                ],
+                "deprecated": false
+            },
+            "parameters": []
+        }
+    },
+    "components": {
+        "schemas": {
+            "Customer-read.customer": {
+                "type": "object",
+                "description": "",
+                "properties": {
+                    "id": {
+                        "readOnly": true,
+                        "type": "integer"
+                    },
+                    "companyName": {
+                        "type": "string"
+                    },
+                    "users": {
+                        "type": "array",
+                        "items": {
+                            "$ref": "#/components/schemas/User-read.customer"
+                        }
+                    }
+                }
+            },
+            "Customer-read.user_details": {
+                "type": "object",
+                "description": "",
+                "properties": {
+                    "companyName": {
+                        "type": "string"
+                    }
+                }
+            },
+            "Customer.jsonld-read.customer": {
+                "type": "object",
+                "description": "",
+                "properties": {
+                    "@context": {
+                        "readOnly": true,
+                        "oneOf": [
+                            {
+                                "type": "string"
+                            },
+                            {
+                                "type": "object",
+                                "properties": {
+                                    "@vocab": {
+                                        "type": "string"
+                                    },
+                                    "hydra": {
+                                        "type": "string",
+                                        "enum": [
+                                            "http://www.w3.org/ns/hydra/core#"
+                                        ]
+                                    }
+                                },
+                                "required": [
+                                    "@vocab",
+                                    "hydra"
+                                ],
+                                "additionalProperties": true
+                            }
+                        ]
+                    },
+                    "@id": {
+                        "readOnly": true,
+                        "type": "string"
+                    },
+                    "@type": {
+                        "readOnly": true,
+                        "type": "string"
+                    },
+                    "id": {
+                        "readOnly": true,
+                        "type": "integer"
+                    },
+                    "companyName": {
+                        "type": "string"
+                    },
+                    "users": {
+                        "type": "array",
+                        "items": {
+                            "$ref": "#/components/schemas/User.jsonld-read.customer"
+                        }
+                    }
+                }
+            },
+            "Customer.jsonld-read.user_details": {
+                "type": "object",
+                "description": "",
+                "properties": {
+                    "@context": {
+                        "readOnly": true,
+                        "oneOf": [
+                            {
+                                "type": "string"
+                            },
+                            {
+                                "type": "object",
+                                "properties": {
+                                    "@vocab": {
+                                        "type": "string"
+                                    },
+                                    "hydra": {
+                                        "type": "string",
+                                        "enum": [
+                                            "http://www.w3.org/ns/hydra/core#"
+                                        ]
+                                    }
+                                },
+                                "required": [
+                                    "@vocab",
+                                    "hydra"
+                                ],
+                                "additionalProperties": true
+                            }
+                        ]
+                    },
+                    "@id": {
+                        "readOnly": true,
+                        "type": "string"
+                    },
+                    "@type": {
+                        "readOnly": true,
+                        "type": "string"
+                    },
+                    "companyName": {
+                        "type": "string"
+                    }
+                }
+            },
+            "Product-read.collection": {
+                "type": "object",
+                "description": "",
+                "properties": {
+                    "id": {
+                        "readOnly": true,
+                        "type": "integer"
+                    },
+                    "brand": {
+                        "type": "string"
+                    },
+                    "model": {
+                        "type": "string"
+                    },
+                    "stock": {
+                        "type": "integer"
+                    }
+                }
+            },
+            "Product-read.collection_read.items": {
+                "type": "object",
+                "description": "",
+                "properties": {
+                    "id": {
+                        "readOnly": true,
+                        "type": "integer"
+                    },
+                    "brand": {
+                        "type": "string"
+                    },
+                    "model": {
+                        "type": "string"
+                    },
+                    "description": {
+                        "type": "string"
+                    },
+                    "price": {
+                        "type": "number"
+                    },
+                    "color": {
+                        "type": "string"
+                    },
+                    "stock": {
+                        "type": "integer"
+                    },
+                    "createdAt": {
+                        "type": "string",
+                        "format": "date-time"
+                    }
+                }
+            },
+            "Product.jsonld-read.collection": {
+                "type": "object",
+                "description": "",
+                "properties": {
+                    "@id": {
+                        "readOnly": true,
+                        "type": "string"
+                    },
+                    "@type": {
+                        "readOnly": true,
+                        "type": "string"
+                    },
+                    "id": {
+                        "readOnly": true,
+                        "type": "integer"
+                    },
+                    "brand": {
+                        "type": "string"
+                    },
+                    "model": {
+                        "type": "string"
+                    },
+                    "stock": {
+                        "type": "integer"
+                    }
+                }
+            },
+            "Product.jsonld-read.collection_read.items": {
+                "type": "object",
+                "description": "",
+                "properties": {
+                    "@context": {
+                        "readOnly": true,
+                        "oneOf": [
+                            {
+                                "type": "string"
+                            },
+                            {
+                                "type": "object",
+                                "properties": {
+                                    "@vocab": {
+                                        "type": "string"
+                                    },
+                                    "hydra": {
+                                        "type": "string",
+                                        "enum": [
+                                            "http://www.w3.org/ns/hydra/core#"
+                                        ]
+                                    }
+                                },
+                                "required": [
+                                    "@vocab",
+                                    "hydra"
+                                ],
+                                "additionalProperties": true
+                            }
+                        ]
+                    },
+                    "@id": {
+                        "readOnly": true,
+                        "type": "string"
+                    },
+                    "@type": {
+                        "readOnly": true,
+                        "type": "string"
+                    },
+                    "id": {
+                        "readOnly": true,
+                        "type": "integer"
+                    },
+                    "brand": {
+                        "type": "string"
+                    },
+                    "model": {
+                        "type": "string"
+                    },
+                    "description": {
+                        "type": "string"
+                    },
+                    "price": {
+                        "type": "number"
+                    },
+                    "color": {
+                        "type": "string"
+                    },
+                    "stock": {
+                        "type": "integer"
+                    },
+                    "createdAt": {
+                        "type": "string",
+                        "format": "date-time"
+                    }
+                }
+            },
+            "User": {
+                "type": "object",
+                "description": "",
+                "properties": {
+                    "id": {
+                        "readOnly": true,
+                        "type": "integer"
+                    },
+                    "firstName": {
+                        "minLength": 3,
+                        "maxLength": 20,
+                        "type": "string"
+                    },
+                    "lastName": {
+                        "minLength": 3,
+                        "maxLength": 100,
+                        "type": "string",
+                        "nullable": true
+                    },
+                    "email": {
+                        "format": "email",
+                        "externalDocs": {
+                            "url": "http://schema.org/email"
+                        },
+                        "type": "string"
+                    },
+                    "customer": {
+                        "type": "string",
+                        "format": "iri-reference"
+                    }
+                },
+                "required": [
+                    "firstName",
+                    "lastName",
+                    "email",
+                    "customer"
+                ]
+            },
+            "User-read.customer": {
+                "type": "object",
+                "description": "",
+                "properties": {
+                    "id": {
+                        "readOnly": true,
+                        "type": "integer"
+                    },
+                    "firstName": {
+                        "minLength": 3,
+                        "maxLength": 20,
+                        "type": "string"
+                    },
+                    "lastName": {
+                        "minLength": 3,
+                        "maxLength": 100,
+                        "type": "string",
+                        "nullable": true
+                    }
+                },
+                "required": [
+                    "firstName",
+                    "lastName"
+                ]
+            },
+            "User-read.user": {
+                "type": "object",
+                "description": "",
+                "properties": {
+                    "id": {
+                        "readOnly": true,
+                        "type": "integer"
+                    },
+                    "firstName": {
+                        "minLength": 3,
+                        "maxLength": 20,
+                        "type": "string"
+                    },
+                    "lastName": {
+                        "minLength": 3,
+                        "maxLength": 100,
+                        "type": "string",
+                        "nullable": true
+                    }
+                },
+                "required": [
+                    "firstName",
+                    "lastName"
+                ]
+            },
+            "User-read.user_details": {
+                "type": "object",
+                "description": "",
+                "properties": {
+                    "id": {
+                        "readOnly": true,
+                        "type": "integer"
+                    },
+                    "firstName": {
+                        "minLength": 3,
+                        "maxLength": 20,
+                        "type": "string"
+                    },
+                    "lastName": {
+                        "minLength": 3,
+                        "maxLength": 100,
+                        "type": "string",
+                        "nullable": true
+                    },
+                    "email": {
+                        "format": "email",
+                        "externalDocs": {
+                            "url": "http://schema.org/email"
+                        },
+                        "type": "string"
+                    },
+                    "customer": {
+                        "$ref": "#/components/schemas/Customer-read.user_details"
+                    }
+                },
+                "required": [
+                    "firstName",
+                    "lastName",
+                    "email",
+                    "customer"
+                ]
+            },
+            "User.jsonld": {
+                "type": "object",
+                "description": "",
+                "properties": {
+                    "@context": {
+                        "readOnly": true,
+                        "oneOf": [
+                            {
+                                "type": "string"
+                            },
+                            {
+                                "type": "object",
+                                "properties": {
+                                    "@vocab": {
+                                        "type": "string"
+                                    },
+                                    "hydra": {
+                                        "type": "string",
+                                        "enum": [
+                                            "http://www.w3.org/ns/hydra/core#"
+                                        ]
+                                    }
+                                },
+                                "required": [
+                                    "@vocab",
+                                    "hydra"
+                                ],
+                                "additionalProperties": true
+                            }
+                        ]
+                    },
+                    "@id": {
+                        "readOnly": true,
+                        "type": "string"
+                    },
+                    "@type": {
+                        "readOnly": true,
+                        "type": "string"
+                    },
+                    "id": {
+                        "readOnly": true,
+                        "type": "integer"
+                    },
+                    "firstName": {
+                        "minLength": 3,
+                        "maxLength": 20,
+                        "type": "string"
+                    },
+                    "lastName": {
+                        "minLength": 3,
+                        "maxLength": 100,
+                        "type": "string",
+                        "nullable": true
+                    },
+                    "email": {
+                        "format": "email",
+                        "externalDocs": {
+                            "url": "http://schema.org/email"
+                        },
+                        "type": "string"
+                    },
+                    "customer": {
+                        "type": "string",
+                        "format": "iri-reference"
+                    }
+                },
+                "required": [
+                    "firstName",
+                    "lastName",
+                    "email",
+                    "customer"
+                ]
+            },
+            "User.jsonld-read.customer": {
+                "type": "object",
+                "description": "",
+                "properties": {
+                    "@context": {
+                        "readOnly": true,
+                        "oneOf": [
+                            {
+                                "type": "string"
+                            },
+                            {
+                                "type": "object",
+                                "properties": {
+                                    "@vocab": {
+                                        "type": "string"
+                                    },
+                                    "hydra": {
+                                        "type": "string",
+                                        "enum": [
+                                            "http://www.w3.org/ns/hydra/core#"
+                                        ]
+                                    }
+                                },
+                                "required": [
+                                    "@vocab",
+                                    "hydra"
+                                ],
+                                "additionalProperties": true
+                            }
+                        ]
+                    },
+                    "@id": {
+                        "readOnly": true,
+                        "type": "string"
+                    },
+                    "@type": {
+                        "readOnly": true,
+                        "type": "string"
+                    },
+                    "id": {
+                        "readOnly": true,
+                        "type": "integer"
+                    },
+                    "firstName": {
+                        "minLength": 3,
+                        "maxLength": 20,
+                        "type": "string"
+                    },
+                    "lastName": {
+                        "minLength": 3,
+                        "maxLength": 100,
+                        "type": "string",
+                        "nullable": true
+                    }
+                },
+                "required": [
+                    "firstName",
+                    "lastName"
+                ]
+            },
+            "User.jsonld-read.user": {
+                "type": "object",
+                "description": "",
+                "properties": {
+                    "@id": {
+                        "readOnly": true,
+                        "type": "string"
+                    },
+                    "@type": {
+                        "readOnly": true,
+                        "type": "string"
+                    },
+                    "id": {
+                        "readOnly": true,
+                        "type": "integer"
+                    },
+                    "firstName": {
+                        "minLength": 3,
+                        "maxLength": 20,
+                        "type": "string"
+                    },
+                    "lastName": {
+                        "minLength": 3,
+                        "maxLength": 100,
+                        "type": "string",
+                        "nullable": true
+                    }
+                },
+                "required": [
+                    "firstName",
+                    "lastName"
+                ]
+            },
+            "User.jsonld-read.user_details": {
+                "type": "object",
+                "description": "",
+                "properties": {
+                    "@context": {
+                        "readOnly": true,
+                        "oneOf": [
+                            {
+                                "type": "string"
+                            },
+                            {
+                                "type": "object",
+                                "properties": {
+                                    "@vocab": {
+                                        "type": "string"
+                                    },
+                                    "hydra": {
+                                        "type": "string",
+                                        "enum": [
+                                            "http://www.w3.org/ns/hydra/core#"
+                                        ]
+                                    }
+                                },
+                                "required": [
+                                    "@vocab",
+                                    "hydra"
+                                ],
+                                "additionalProperties": true
+                            }
+                        ]
+                    },
+                    "@id": {
+                        "readOnly": true,
+                        "type": "string"
+                    },
+                    "@type": {
+                        "readOnly": true,
+                        "type": "string"
+                    },
+                    "id": {
+                        "readOnly": true,
+                        "type": "integer"
+                    },
+                    "firstName": {
+                        "minLength": 3,
+                        "maxLength": 20,
+                        "type": "string"
+                    },
+                    "lastName": {
+                        "minLength": 3,
+                        "maxLength": 100,
+                        "type": "string",
+                        "nullable": true
+                    },
+                    "email": {
+                        "format": "email",
+                        "externalDocs": {
+                            "url": "http://schema.org/email"
+                        },
+                        "type": "string"
+                    },
+                    "customer": {
+                        "$ref": "#/components/schemas/Customer.jsonld-read.user_details"
+                    }
+                },
+                "required": [
+                    "firstName",
+                    "lastName",
+                    "email",
+                    "customer"
+                ]
+            }
+        },
+        "responses": {},
+        "parameters": {},
+        "examples": {},
+        "requestBodies": {},
+        "headers": {},
+        "securitySchemes": {
+            "apiKey": {
+                "type": "apiKey",
+                "description": "Value for the Authorization header parameter.",
+                "name": "Authorization",
+                "in": "header"
+            }
+        }
+    },
+    "security": [
+        {
+            "apiKey": []
+        }
+    ],
+    "tags": []
+}
