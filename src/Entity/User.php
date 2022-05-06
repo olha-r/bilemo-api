@@ -25,7 +25,12 @@ use Symfony\Component\Validator\Constraints as Assert;
  *                  "groups"={"read:user"}
  *              }
  *          },
- *          "post"},
+ *          "post"={
+ *              "denormalization_context"={
+ *                  "groups"={"write:user"}
+ *              }
+ *          }
+ *     },
  *     attributes={
  *          "pagination_items_per_page" = 10
  *     }
@@ -52,7 +57,7 @@ class User
      *      minMessage = "Le prénom dois contenir entre 3 et 20 caractères",
      *      maxMessage = "Le prénom dois contenir entre 3 et 20 caractères"
      * )
-     * @Groups({"read:user_details", "read:user", "read:customer"})
+     * @Groups({"read:user_details", "read:user", "read:customer", "write:user"})
      */
     private $firstName;
 
@@ -65,7 +70,7 @@ class User
      *      minMessage = "Le nom dois contenir entre 3 et 100 caractères",
      *      maxMessage = "Le nom dois contenir entre 3 et 100 caractères"
      * )
-     * @Groups({"read:user_details", "read:user",  "read:customer"})
+     * @Groups({"read:user_details", "read:user",  "read:customer", "write:user"})
      */
     private $lastName;
 
@@ -75,7 +80,7 @@ class User
      * @Assert\Email(
      *     message = "Le format de l'adresse email doit être valid."
      * )
-     * @Groups({"read:user_details"})
+     * @Groups({"read:user_details", "write:user"})
      */
     private $email;
 
