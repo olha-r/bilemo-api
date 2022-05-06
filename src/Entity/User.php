@@ -20,12 +20,15 @@ use Symfony\Component\Validator\Constraints as Assert;
  *          "delete"
  *      },
  *      collectionOperations={
- *          "post"},
- *     subresourceOperations={
- *          "api_customers_users_get_subresource"={
- *                 "normalization_context"={
- *                      "groups"={"users_subresource"}
- *                  }
+ *          "get"={
+ *              "normalization_context"={
+ *                  "groups"={"read:user"}
+ *              }
+ *          },
+ *          "post"={
+ *              "denormalization_context"={
+ *                  "groups"={"write:user"}
+ *              }
  *          }
  *     },
  *     attributes={
@@ -41,7 +44,7 @@ class User
      * @ORM\Id
      * @ORM\GeneratedValue
      * @ORM\Column(type="integer")
-     * @Groups({"read:user_details", "users_subresource", "read:customer"})
+     * @Groups({"read:user_details", "read:user", "read:customer"})
      */
     private $id;
 
@@ -54,7 +57,7 @@ class User
      *      minMessage = "Le prénom dois contenir entre 3 et 20 caractères",
      *      maxMessage = "Le prénom dois contenir entre 3 et 20 caractères"
      * )
-     * @Groups({"read:user_details", "users_subresource", "read:customer"})
+     * @Groups({"read:user_details", "read:user", "read:customer", "write:user"})
      */
     private $firstName;
 
@@ -67,7 +70,7 @@ class User
      *      minMessage = "Le nom dois contenir entre 3 et 100 caractères",
      *      maxMessage = "Le nom dois contenir entre 3 et 100 caractères"
      * )
-     * @Groups({"read:user_details", "users_subresource", "read:customer"})
+     * @Groups({"read:user_details", "read:user",  "read:customer", "write:user"})
      */
     private $lastName;
 
@@ -77,7 +80,7 @@ class User
      * @Assert\Email(
      *     message = "Le format de l'adresse email doit être valid."
      * )
-     * @Groups({"read:user_details"})
+     * @Groups({"read:user_details", "write:user"})
      */
     private $email;
 
