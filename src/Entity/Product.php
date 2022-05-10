@@ -80,7 +80,6 @@ class Product
 
     /**
      * @ORM\Column(type="datetime")
-     * @Groups({"read:items"})
      */
     private $createdAt;
 
