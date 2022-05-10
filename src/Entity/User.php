@@ -33,6 +33,11 @@ use Symfony\Component\Validator\Constraints as Assert;
  *     },
  *     attributes={
  *          "pagination_items_per_page" = 10
+ *     },
+ *     cacheHeaders={
+ *     "max_age" = 7200,
+ *     "shared_max_age" = 7200,
+ *     "vary" = {"Authorization", "Accept-Language"}
  *     }
  * )
  * @UniqueEntity("email", message="Un utilisateur ayant cette adresse email existe déjà")
