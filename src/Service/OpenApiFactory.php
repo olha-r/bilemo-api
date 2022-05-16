@@ -64,7 +64,6 @@ class OpenApiFactory implements OpenApiFactoryInterface
 
         return $openApi->withPaths($newPaths);
 
-
     }
 
     private function addSchema(OpenApi $openApi, array $errorSchema): OpenApi
